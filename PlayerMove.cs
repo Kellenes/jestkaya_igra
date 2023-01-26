@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -18,6 +18,8 @@ public class PlayerMove : MonoBehaviour
 
     private bool isJumping;
 
+    private bool kd = true;
+
     private void Awake()
     {
         charController = GetComponent<CharacterController>();
@@ -31,6 +33,7 @@ public class PlayerMove : MonoBehaviour
             Time.timeScale = 1f;
         }
         PlayerMovement();
+        slow();
     }
 
     private void PlayerMovement()
@@ -73,4 +76,33 @@ public class PlayerMove : MonoBehaviour
         isJumping = false;
     }
 
-}
+    private void slow()
+    {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            if(Time.timeScale == 1)
+            {
+                if(kd == true)
+                {
+                    Time.timeScale = 0.5F;
+                    movementSpeed = movementSpeed*2;
+                    Invoke(nameof(time), 3); //Waits for 3 seconds before calling "time"
+                }  
+            }   
+        }
+    }
+
+    private void time()
+    {
+        Time.timeScale = 1F;
+        movementSpeed = movementSpeed/2;
+        kd = false;
+        Invoke(nameof(normal), 6);
+    }
+
+    private void normal()
+    {
+        kd = true;
+    }
+
+} 
