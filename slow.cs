@@ -62,16 +62,29 @@ public class slow : MonoBehaviour
     private void slow()
     {
         if (Input.GetKeyDown(KeyCode.E))
-        {   
-            Time.timeScale = 0.5F;
-            movementSpeed = movementSpeed*2;
-            Invoke(nameof(time), 3); //Waits for 3 seconds before calling "time"
+        {
+            if(Time.timeScale == 1)
+            {
+                if(kd == true)
+                {
+                    Time.timeScale = 0.5F;
+                    movementSpeed = movementSpeed*2;
+                    Invoke(nameof(time), 3); //Waits for 3 seconds before calling "time"
+                }  
+            }   
         }
     }
 
     private void time()
     {
-        Time.timeScale = 1;
+        Time.timeScale = 1F;
         movementSpeed = movementSpeed/2;
+        kd = false;
+        Invoke(nameof(normal), 6);
+    }
+
+    private void normal()
+    {
+        kd = true;
     }
 //
